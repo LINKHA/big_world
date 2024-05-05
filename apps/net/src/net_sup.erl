@@ -30,8 +30,8 @@ init([]) ->
                  intensity => 0,
                  period => 1},
     ChildSpecs = [
-        {tcp_server_sup, {tcp_server_sup, start_link, []},
-            permanent, 5000, worker, [tcp_server_sup]}
+        {tcp_reverse_app, {tcp_reverse_app, start_link, []},
+            permanent, 5000, worker, [tcp_reverse_app]}
         ],
     {ok, {SupFlags, ChildSpecs}}.
 
