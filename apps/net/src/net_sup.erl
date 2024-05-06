@@ -29,10 +29,15 @@ init([]) ->
     SupFlags = #{strategy => one_for_all,
                  intensity => 0,
                  period => 1},
-    ChildSpecs = [
-        {tcp_reverse_app, {tcp_reverse_app, start_link, []},
-            permanent, 5000, worker, [tcp_reverse_app]}
-        ],
+    % ChildSpecs = [
+    %     #{
+    %         id => tcp_reverse_app, 
+    %         start => {tcp_reverse_app, start, [?MODULE, []]},
+    %         shutdown => 5000, 
+    %         type => worker, 
+    %         modules => [tcp_reverse_app]}
+    %     ],
+    ChildSpecs = [],
     {ok, {SupFlags, ChildSpecs}}.
 
 %% internal functions
