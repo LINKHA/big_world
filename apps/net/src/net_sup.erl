@@ -26,9 +26,9 @@ start_link() ->
 %%                  type => worker(),       % optional
 %%                  modules => modules()}   % optional
 init([]) ->
-    SupFlags = #{strategy => one_for_all,
-                 intensity => 0,
-                 period => 1},
+    SupFlags = #{strategy => one_for_one,
+                 intensity => 1,
+                 period => 5},
     % ChildSpecs = [
     %     #{
     %         id => tcp_reverse_app, 
@@ -37,7 +37,10 @@ init([]) ->
     %         type => worker, 
     %         modules => [tcp_reverse_app]}
     %     ],
-    ChildSpecs = [],
+    ChildSpecs = [
+        % {ekcp_conn_sup, {ekcp_conn_sup, start_link, []},
+        %     permanent, 5000, worker, [ekcp_conn_sup]}
+    ],
     {ok, {SupFlags, ChildSpecs}}.
 
 %% internal functions
