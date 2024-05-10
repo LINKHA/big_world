@@ -17,6 +17,7 @@ start(_StartType, _StartArgs) ->
     ?TAB = ets:new(?TAB, [
       ordered_set, public, named_table]),
     ekcp_sup:start_link(),
+    http_sup:start_link(),
     net_sup:start_link().
 
 stop(_State) ->
