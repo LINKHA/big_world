@@ -18,6 +18,8 @@ start(_StartType, _StartArgs) ->
       ordered_set, public, named_table]),
     ekcp_sup:start_link(),
     http_sup:start_link(),
+    {ok, Connection} = eredis:start_link("localhost", 36379, [{password, "G62m50oigInC30sf"}]),
+    {ok, Result} = eredis:q(Connection, ["SET", "mykey", "Hello"]),
     net_sup:start_link().
 
 stop(_State) ->
