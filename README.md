@@ -20,5 +20,5 @@ rebar3 new app xxx
 2. 启动中间件容器:
 
    ```shell
-   docker-compose -f docker-compose-env.yml up -d
+   docker-compose -f docker-compose-rel-env.yml up -d
    ```

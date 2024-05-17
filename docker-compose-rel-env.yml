@@ -5,13 +5,14 @@ services:
   redis-master:
     image: redis:6.2.5
     container_name: redis-master
-    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    command: ["sh", "-c", "redis-server /usr/local/etc/redis/redis.conf & redis-sentinel /usr/local/etc/redis/sentinel.conf"]
     volumes:
       - ./env_config/redis/master/redis.conf:/usr/local/etc/redis/redis.conf
       - ./env_config/redis/master/sentinel.conf:/usr/local/etc/redis/sentinel.conf
+      - ./data/redis/data_master:/data:rw
     ports:
       - "6379:6379"
-      - "26379:26379" # Sentinel port
+      - "26379:26379"
     networks:
       bigworld_net:
         ipv4_address: 172.20.0.2
@@ -19,15 +20,16 @@ services:
   redis-slave1:
     image: redis:6.2.5
     container_name: redis-slave1
-    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    command: ["sh", "-c", "redis-server /usr/local/etc/redis/redis.conf & redis-sentinel /usr/local/etc/redis/sentinel.conf"]
     volumes:
       - ./env_config/redis/slave1/redis.conf:/usr/local/etc/redis/redis.conf
       - ./env_config/redis/slave1/sentinel.conf:/usr/local/etc/redis/sentinel.conf
+      - ./data/redis/redis_slave1:/data:rw
     depends_on:
       - redis-master
     ports:
       - "6380:6379"
-      - "26380:26379" # Sentinel port
+      - "26380:26379"
     networks:
       bigworld_net:
         ipv4_address: 172.20.0.3
@@ -35,14 +37,16 @@ services:
   redis-slave2:
     image: redis:6.2.5
     container_name: redis-slave2
-    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    command: ["sh", "-c", "redis-server /usr/local/etc/redis/redis.conf & redis-sentinel /usr/local/etc/redis/sentinel.conf"]
     volumes:
       - ./env_config/redis/slave2/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./env_config/redis/slave2/sentinel.conf:/usr/local/etc/redis/sentinel.conf
+      - ./data/redis/redis_slave2:/data:rw
     depends_on:
       - redis-master
     ports:
       - "6381:6379"
-      - "26381:26379" # Sentinel port
+      - "26381:26379"
     networks:
       bigworld_net:
         ipv4_address: 172.20.0.4
