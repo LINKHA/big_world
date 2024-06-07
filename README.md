@@ -21,4 +21,5 @@ rebar3 new app xxx
 
    ```shell
    docker-compose -f docker-compose-rel-env.yml up -d
+   docker-compose -f docker-compose-env.yml up -d
    ```

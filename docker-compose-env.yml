@@ -2,13 +2,10 @@ version: '3.8'
 
 services:
   mongo:
-    image: mongo:7.0
+    image: mongo:4.4
     container_name: mongo
     ports:
       - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: mongo_user
-      MONGO_INITDB_ROOT_PASSWORD: PXDN93VRKUm8TeE7
     volumes:
       - ./data/mongo/data:/data/db
 
@@ -17,14 +14,14 @@ services:
     image: redis:6.2.5
     container_name: redis
     ports:
-      - 36379:36379
+      - 6379:6379
     environment:
       # 时区上海 - Time zone Shanghai (Change if needed)
       TZ: Asia/Shanghai
     volumes:
       # 数据文件 - data files
       - ./data/redis/data:/data:rw
-    command: "redis-server --requirepass G62m50oigInC30sf  --appendonly yes --port 36379"
+    command: "redis-server --appendonly yes --port 6379"
     privileged: true
     restart: always
     networks:
